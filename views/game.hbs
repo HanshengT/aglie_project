@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Game</title>
+	<link rel="stylesheet" type="text/css" href="game.css">
+</head>
+
+<body>
+	<div id="game_frame">
+		<div id="bot">
+			<h2 id="bot_name"></h2>
+			<hr>
+			<h3>Stutus:</h3>
+			<p id="status"></p>
+		</div>
+		<div id="roulette">
+
+			<p id="notification"></p>
+
+			<button id="PositionBtn1" onclick="SetPosition(1)"> </button>
+			<img src="1.png" id="pic1">
+
+			<button id="PositionBtn2" onclick="SetPosition(2)"> </button>
+			<img src="2.png" id="pic2">
+
+			<button id="PositionBtn3" onclick="SetPosition(3)"> </button>
+			<img src="3.png" id="pic3">
+
+			<button id="PositionBtn4" onclick="SetPosition(4)"> </button>
+			<img src="4.png" id="pic4">
+
+			<button id="PositionBtn5" onclick="SetPosition(5)"> </button>
+			<img src="5.png" id="pic5">
+
+			<button id="PositionBtn6" onclick="SetPosition(6)"> </button>
+			<img src="6.png" id="pic6">
+
+			<button id="PositionBtn7" onclick="SetPosition(7)"> </button>
+			<img src="7.png" id="pic7">
+
+			<button id="PositionBtn8" onclick="SetPosition(8)"> </button>
+			<img src="8.png" id="pic8">
+
+			<button id="PositionBtn9" onclick="SetPosition(9)"> </button>
+			<img src="9.png" id="pic9">
+
+			<button id="PositionBtn10" onclick="SetPosition(10)"> </button>
+			<img src="10.png" id="pic10">
+
+			<button id="PositionBtn11" onclick="SetPosition(11)"> </button>
+			<img src="11.png" id="pic11">
+
+			<button id="PositionBtn12" onclick="SetPosition(12)"> </button>
+			<img src="12.png" id="pic12">
+
+			<div id="mask"></div>
+		</div>
+
+		<div id="player">
+			<div id="mask2"></div>
+			<div id="instr">
+				<p>1. Click the <b>Number</b> on the left to select the position to place the bullet.</p>
+				<p>2. Select a number in the dropbox below to set how much to rotate.</p>
+				<p>3. Click <b>Enter</b> below to start!</p>
+				<p><b>WHOEVER HIT BY THE BULLET FIRST LOSE</b></p>
+			</div>
+			<hr>
+			<select id="rotation_num">
+				<option value='1'>1</option>
+				<option value='2'>2</option>
+				<option value='3'>3</option>
+				<option value='4'>4</option>
+				<option value='5'>5</option>
+				<option value='6'>6</option>
+				<option value='7'>7</option>
+				<option value='8'>8</option>
+				<option value='9'>9</option>
+				<option value='10'>10</option>
+				<option value='11'>11</option>
+			</select>
+			<button onclick="Check()" id="gameBtn">Enter</button>
+			<form action="/profile" method="post" name="score">
+				<button name="score" value={{score}}>Back to Profile</button>
+			</form>
+			<div id="score_display">
+				<h1>Your score is: <span id="score">{{score}}</span></h1>
+			</div>
+		</div>
+		
+</body>
+<script type="text/javascript" src="game.js"></script>
+
+</html>

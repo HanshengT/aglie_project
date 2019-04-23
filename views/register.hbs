@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<meta charset="UTF-8">
+
+
+<title>Register</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<body>
+    <div id="content">
+        <h1>Register</h1>
+
+        <div id="reg_form">
+
+            <form action="/create-user" method="POST">
+                <input name="username" type="text" placeholder="    Username" required="required"> <br>
+                <input name="password" type="password" placeholder="    Password" required="required"> <br>
+                <input name="password_confirm" type="password" placeholder="    Confirm Password" required="required"> <br>
+                <input name="email" type="email" placeholder="    Email" required="required'"> <br>
+                <input type="submit" id="regBtn">
+            </form>
+
+        </div>
+        <p id="sign_in">Already have an account? <a href="/">Sign In</a></p>
+    </div>
+
+        
+
+</body>
+<style>
+    body {
+    background-color: #323232;
+}
+
+#content{
+    margin: 100px auto;
+    width: 500px;
+    height: 400px;
+    background-color: #e1e1e1;
+    border-radius: 20px;
+}
+
+#reg_form {
+    position: relative;
+    top: 10px;
+    margin: 10px 80px;
+    display: inline-block;
+}
+
+
+input {
+    border-radius: 10px;
+    background-color: #cacaca;
+    padding: 2px;
+    margin: 10px auto;
+    width: 350px;
+    height: 40px;
+    box-shadow: none;
+    border: none;
+}
+
+#regBtn{
+    position: relative;
+    background-color: #e15848;
+    width: 80px;
+    height: 40px;
+    color: #e1e1e1;
+    left: 70%;
+}
+
+h1 {
+    position: relative;
+    top: 25px;
+    left: 35px;
+    margin: 25px 40px;
+    font-family: 'Roboto', sans-serif;
+    color: #e15848;
+}
+
+#sign_in{
+    position: relative;
+    height: 50px;
+    top: 10px;
+    line-height: 48px;
+    background-color: #e15848;
+    color: #e1e1e1;
+    text-align: center;
+    border-radius: 0px 0px 20px 20px;
+    font-size: 20px;
+
+}
+</style>
+
+<script src="/scripts.js"></script>
+
+</html>

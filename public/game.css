@@ -1,0 +1,197 @@
+body{
+	background-color: #323232;
+}
+
+#game_frame{
+	position: relative;
+	background-color: #e1e1e1;
+	border: 3px solid #ddd08f;
+	width: 1280px;
+	height: 720px;
+	margin: 20px auto;
+}
+
+#bot{
+	position: absolute;
+	width: 200px;
+	height: 720px;
+	padding: 60px 0px 0px 15px
+}
+
+#player{
+	position: absolute;
+	width: 360px;
+	height: 720px;
+	top: 0px;
+	left: 920px;
+}
+
+#roulette{
+	position: relative;
+	background-color: #ffffff;
+	width: 720px;
+	height: 720px;
+	left: 200px;
+}
+
+#roulette img{
+	position: absolute;
+	width: 720px;
+	height: auto;
+	transition: 0.3s;
+}
+
+#roulette button{
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	z-index: 1;
+	background: transparent;
+	border: none;
+
+}
+
+#PositionBtn1{
+	top: 50px;
+	left: 310px;
+}
+
+#PositionBtn2{
+	top: 90px;
+	left: 430px;
+}
+
+#PositionBtn3{
+	top: 190px;
+	left: 530px;
+}
+
+#PositionBtn4{
+	top: 310px;
+	left: 550px;
+}
+
+#PositionBtn5{
+	top: 430px;
+	left: 530px;
+}
+
+#PositionBtn6{
+	top: 520px;
+	left: 430px;
+}
+
+#PositionBtn7{
+	top: 560px;
+	left: 310px;
+}
+
+#PositionBtn8{
+	top: 520px;
+	left: 190px;
+}
+
+#PositionBtn9{
+	top: 430px;
+	left: 95px;
+}
+
+#PositionBtn10{
+	top: 310px;
+	left: 70px;
+}
+
+#PositionBtn11{
+	top: 190px;
+	left: 95px;
+}
+
+#PositionBtn12{
+	top: 90px;
+	left: 185px;
+}
+
+#PositionBtn1:hover+#pic1{
+	transform: scale(1.1);
+}
+
+#PositionBtn2:hover+#pic2{
+	transform: scale(1.1);
+}
+
+#PositionBtn3:hover+#pic3{
+	transform: scale(1.1);
+}
+
+#PositionBtn4:hover+#pic4{
+	transform: scale(1.1);
+}
+
+#PositionBtn5:hover+#pic5{
+	transform: scale(1.1);
+}
+
+#PositionBtn6:hover+#pic6{
+	transform: scale(1.1);
+}
+
+#PositionBtn7:hover+#pic7{
+	transform: scale(1.1);
+}
+
+#PositionBtn8:hover+#pic8{
+	transform: scale(1.1);
+}
+
+#PositionBtn9:hover+#pic9{
+	transform: scale(1.1);
+}
+
+#PositionBtn10:hover+#pic10{
+	transform: scale(1.1);
+}
+
+#PositionBtn11:hover+#pic11{
+	transform: scale(1.1);
+}
+
+#PositionBtn12:hover+#pic12{
+	transform: scale(1.1);
+}
+
+#mask{
+	position: absolute;
+	background: transparent;
+	width: 0px;
+	height: 0px;
+	z-index: 2;
+}
+
+#mask2{
+	position: absolute;
+	background: transparent;
+	width: 0px;
+	height: 0px;
+	z-index: 2;
+}
+
+
+#instr{
+	color: #323232;
+	padding: 0px 5px 0px 10px;
+
+}
+
+#notification{
+	position: absolute;
+	top: 310px;
+	left: 260px;
+	color: #323232;
+	font-size: 24px;
+}
+
+#rotation_num{
+	width: 100px;
+	margin: 20px auto;
+	
+}
