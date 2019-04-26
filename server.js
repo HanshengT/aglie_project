@@ -52,19 +52,19 @@ app.all('/logout', (request, response) => {
     response.redirect('/');
 });
 
-app.get('/', function (request, response) {
+app.get('/', function(request, response) {
     response.render('home.hbs', {
         title: 'Home'
     });
 });
 
-app.get('/register', function (request, response) {
+app.get('/register', function(request, response) {
     response.render('register.hbs', {
         title: 'Register'
     });
 });
 
-app.get('/succeed/:username', function (request, response) {
+app.get('/succeed/:username', function(request, response) {
     console.log(request.params.username);
     response.render('register_succeed.hbs', {
         title: 'Succeed',
@@ -72,28 +72,53 @@ app.get('/succeed/:username', function (request, response) {
     });
 });
 
-app.get('/profile', function (request, response) {
-    console.log(request.session.user);
-    response.render('profile.hbs', {
-        title: 'Account',
-        user: request.session.user.username,
-        score: request.session.user.score
-    });
+app.get('/profile', function(request, response) {
+    var db = utils.getDB();
+
+    db.collection('users').find({
+        username: request.session.user.username
+    }).toArray(function(err, result) {
+        response.render('profile.hbs', {
+            title: 'Account',
+            user: request.session.user.username,
+            score: result[0].score
+        });
+    })
 });
 
-app.get('/game', function (request, response) {
-    response.render('game.hbs', {
-        title: 'Game',
-        user: request.session.user.username,
-        score: request.session.user.score
-    });
+app.get('/game', function(request, response) {
+    var db = utils.getDB();
+
+    db.collection('users').find({
+        username: request.session.user.username
+    }).toArray(function(err, result) {
+        response.render('game.hbs', {
+            title: 'Game',
+            user: request.session.user.username,
+            score: result[0].score
+        });
+
+    })
 });
 
-app.get('/404', function (request, response) {
+app.get('/404', function(request, response) {
     response.send('Page Not Fount');
 });
 
-app.post('/create-user', function (request, response) {
+app.get('/save-score/:score', function(request, response) {
+    var db = utils.getDB();
+
+    var score = Number(request.params.score)
+
+    db.collection('users').updateOne({
+        "username": request.session.user.username
+
+    }, { $set: { "score": score } }, function(error, result) {
+        response.redirect(`/profile`)
+    })
+})
+
+app.post('/create-user', function(request, response) {
     var db = utils.getDB();
 
     var username = request.body.username;
@@ -113,7 +138,7 @@ app.post('/create-user', function (request, response) {
 
     db.collection('users').find({
         email: email
-    }).toArray(function (err, result) {
+    }).toArray(function(err, result) {
         if (result[0] != null) {
             response.render('simple_response.hbs', {
                 h1: 'Email already in use'
@@ -126,7 +151,7 @@ app.post('/create-user', function (request, response) {
 
     db.collection('users').find({
         username: username
-    }).toArray(function (err, result) {
+    }).toArray(function(err, result) {
         if (result[0] == null && create == 1) {
             db.collection('users').insertOne({
                 username: username,
@@ -152,17 +177,15 @@ app.post('/create-user', function (request, response) {
 
 });
 
-app.post('/login-user', function (request, response) {
+app.post('/login-user', function(request, response) {
     var db = utils.getDB();
 
     var username = request.body.username;
     var password = request.body.password;
 
-    console.log(request);
-
     db.collection('users').find({
         username: username
-    }).toArray(function (err, result) {
+    }).toArray(function(err, result) {
         if (result[0] != null) {
             let verify = bcrypt.compareSync(password, result[0].password);
             if (verify) {
@@ -189,11 +212,11 @@ app.post('/login-user', function (request, response) {
 
 });
 
-app.get('/reset-password', function (request, response) {
+app.get('/reset-password', function(request, response) {
     response.render('pass_reset.hbs');
 });
 
-app.post('/reset', function (request, response) {
+app.post('/reset', function(request, response) {
     var db = utils.getDB();
 
     var email = request.body.email;
@@ -202,7 +225,7 @@ app.post('/reset', function (request, response) {
 
     db.collection('users').find({
         email: email
-    }).toArray(function (err, result) {
+    }).toArray(function(err, result) {
 
         if (!result[0]) {
             response.render('simple_response.hbs', {
@@ -219,22 +242,19 @@ app.post('/reset', function (request, response) {
                 score: result[0].score,
             };
 
-            crypto.randomBytes(15, function (err, buf) {
+            crypto.randomBytes(15, function(err, buf) {
                 token = buf.toString('hex');
 
-                db.collection('users').updateOne(
-                    { email: email },
-                    {
-                        $set: {
-                            token: token,
-                            tokenExpire: Date.now() + 3600
-                        }
+                db.collection('users').updateOne({ email: email }, {
+                    $set: {
+                        token: token,
+                        tokenExpire: Date.now() + 3600
                     }
-                )
+                })
 
                 request.session.user.token = token
                 request.session.user.tokenExpire = Date.now() + 3600
-                request.session.save(function (err) {
+                request.session.save(function(err) {
                     if (err) {
                         console.log(err);
                     }
@@ -252,7 +272,7 @@ app.post('/reset', function (request, response) {
 
             db.collection('users').find({
                 email: email
-            }).toArray(function (err, result) {
+            }).toArray(function(err, result) {
                 var mailOptions = {
                     to: result[0].email,
                     from: 'roulettegame.node@gmail.com',
@@ -293,12 +313,12 @@ app.post('/reset', function (request, response) {
 
 });
 
-app.get('/reset/:token', function (request, response) {
+app.get('/reset/:token', function(request, response) {
     var db = utils.getDB();
 
     db.collection('users').find({
         token: request.params.token
-    }).toArray(function (err, result) {
+    }).toArray(function(err, result) {
         if (result[0] == null) {
             response.render('simple_response.hbs', {
                 h1: 'Invalid Token'
@@ -311,7 +331,7 @@ app.get('/reset/:token', function (request, response) {
     });
 });
 
-app.post('/reset/:token', function (request, response) {
+app.post('/reset/:token', function(request, response) {
     var db = utils.getDB();
 
     var password = request.body.password;
@@ -320,16 +340,13 @@ app.post('/reset/:token', function (request, response) {
 
     db.collection('users').find({
         token: token
-    }).toArray(function (err, result) {
+    }).toArray(function(err, result) {
         if (result[0] != null) {
-            db.collection('users').updateOne(
-                { token: token },
-                {
-                    $set: {
-                        password: password
-                    }
+            db.collection('users').updateOne({ token: token }, {
+                $set: {
+                    password: password
                 }
-            );
+            });
             response.render('reset_result.hbs', {
                 h1: 'Password Reset',
                 message: 'Your password has been succesfully reset.'

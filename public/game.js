@@ -65,6 +65,7 @@ function ApplyMask() {
     var mask = document.getElementById("mask");
     mask.style.height = '720px';
     mask.style.width = '720px';
+    document.getElementById("notification").innerHTML = ""
 }
 
 function ApplyMask2() {
@@ -77,6 +78,7 @@ function HideMask() {
     var mask = document.getElementById("mask");
     mask.style.height = '0px';
     mask.style.width = '0px';
+    document.getElementById("notification").innerHTML = "Place A Bullet Here"
 }
 
 function HideMask2() {
@@ -85,8 +87,14 @@ function HideMask2() {
     mask2.style.width = '0px';
 }
 
-function Spin(num) {
+function ShowSpin(id) {
+    var pic = document.getElementById(id);
+    pic.style.opacity = '0.4';
+}
 
+function HideSpin(id) {
+    var pic = document.getElementById(id);
+    pic.style.opacity = '1';
 }
 
 
@@ -139,25 +147,26 @@ function StartGame() {
     console.log(position_bot);
     console.log(rotation_bot);
 
-    console.log('----------');
-
 
     game_start = true;
 
     ApplyMask();
     ApplyMask2();
 
-    if (who_go = "self") {
+    HideSpin(`pic${current_pic}`)
+
+    if (who_go == "self") {
         current_pic = CurrentPic(rotation)
+        alert(`You Go ${rotation}`)
         if (current_pic == position_bot || current_pic == position) {
             player_score = player_score - round * 5;
             document.getElementById("score").innerHTML = player_score;
-            alert('You Are Hit By The Bullet!')
+            alert('You Are Hit By The Bullet!(Ready For New Game)')
             position = 0
             rotation = 0
             GenBotName()
-            SetPosition()
-            SetRotation()
+            BotPosition()
+            BotRotation()
             staus = "Selecting"
             switch_time = Math.round(Math.random() * 3000 + 3000);
             game_start = false
@@ -166,17 +175,18 @@ function StartGame() {
             HideMask()
             HideMask2()
         } else {
-            document.getElementById("notification").innerHTML = 'You Got Really Lucky'
+            alert('You Did Not Die')
             current_pic = CurrentPic(rotation_bot)
+            alert(`Bot Goes ${rotation_bot}`)
             if (current_pic == position_bot || current_pic == position) {
                 player_score = player_score + round * 5;
                 document.getElementById("score").innerHTML = player_score;
-                alert('You Won The Game!')
+                alert('You Won The Game!(Ready For New Game)')
                 position = 0
                 rotation = 0
                 GenBotName()
-                SetPosition()
-                SetRotation()
+                BotPosition()
+                BotRotation()
                 status = "Selecting"
                 switch_time = Math.round(Math.random() * 3000 + 3000);
                 game_start = false
@@ -185,9 +195,10 @@ function StartGame() {
                 HideMask()
                 HideMask2()
             } else {
-                document.getElementById("notification").innerHTML = 'Ready For Next Round'
+                alert('Not One Died, New Round(Bot Goes Next)')
+                ShowSpin(`pic${current_pic}`)
                 rotation = 0
-                SetRotation()
+                BotRotation()
                 status = "Selecting"
                 switch_time = Math.round(Math.random() * 3000 + 3000);
                 game_start = false
@@ -196,17 +207,18 @@ function StartGame() {
                 HideMask2()
             }
         }
-    } else if (who_go = "bot") {
+    } else {
         current_pic = CurrentPic(rotation_bot)
+        alert(`Bot Goes ${rotation_bot}`)
         if (current_pic == position_bot || current_pic == position) {
             player_score = player_score + round * 5;
             document.getElementById("score").innerHTML = player_score;
-            alert('You Won The Game!')
+            alert('You Won The Game!(Ready For New Game)')
             position = 0
             rotation = 0
             GenBotName()
-            SetPosition()
-            SetRotation()
+            BotPosition()
+            BotRotation()
             staus = "Selecting"
             switch_time = Math.round(Math.random() * 3000 + 3000);
             game_start = false
@@ -215,17 +227,18 @@ function StartGame() {
             HideMask()
             HideMask2()
         } else {
-            document.getElementById("notification").innerHTML = 'It Is Hard To Win'
+            alert('The Bot Did Not Die')
             current_pic = CurrentPic(rotation)
+            alert(`You Go ${rotation}`)
             if (current_pic == position_bot || current_pic == position) {
                 player_score = player_score - round * 5;
                 document.getElementById("score").innerHTML = player_score;
-                alert('You Are Hit By The Bullet!')
+                alert('You Are Hit By The Bullet!(Ready For New Game)')
                 position = 0
                 rotation = 0
                 GenBotName()
-                SetPosition()
-                SetRotation()
+                BotPosition()
+                BotRotation()
                 status = "Selecting"
                 switch_time = Math.round(Math.random() * 3000 + 3000);
                 game_start = false
@@ -234,7 +247,8 @@ function StartGame() {
                 HideMask()
                 HideMask2()
             } else {
-                document.getElementById("notification").innerHTML = 'Ready For Next Round'
+                alert("No One died, New Round(You GO Next)")
+                ShowSpin(`pic${current_pic}`)
                 rotation = 0
                 SetRotation()
                 status = "Selecting"
@@ -248,5 +262,14 @@ function StartGame() {
         }
 
     }
+    console.log('current:');
+    console.log(current_pic);
+    console.log(player_score);
 
+    console.log('---------');
+
+}
+
+function BackToProfile() {
+    window.location.href = `/save-score/${player_score}`
 }
