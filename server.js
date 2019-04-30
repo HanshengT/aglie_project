@@ -78,7 +78,7 @@ app.get('/profile', function(request, response) {
     db.collection('users').find({
         username: request.session.user.username
     }).toArray(function(err, result) {
-        response.render('profile.hbs', {
+        response.render('profilepage.hbs', {
             title: 'Account',
             user: request.session.user.username,
             score: result[0].score
