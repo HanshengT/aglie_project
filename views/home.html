@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
-<title>Reset Password</title>
+<title>Login</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 <body>
-    <div id="content">
-        <h1>{{h1}}</h1>
+<div id="content">
+    <h1>Login</h1>
+    <div id="login_form">
+        <form action="/login-user" method="POST">
+            <input name="username" type="text" placeholder="    Username" required="required"> <br>
+            <input name="password" type="password" placeholder="    Password" required="required"> <br>
+            <input type="submit" id="loginBtn">
+        </form>
     </div>
+    <div id="forgot_form">
+        <form action="/reset-password" method="all" name="setting">
+            <input name="setting" type="submit" id="forgotBtn" value="Forgot Password">
+        </form>
+    </div>
+    <p id="reg_note">Don't have an account? <a href="/register">Register</a></p>
+</div>
 </body>
-
 <style>
     body {
         background-color: #323232;
@@ -23,11 +35,18 @@
         border-radius: 20px;
     }
 
-    #reset_form {
+    #login_form {
         position: relative;
         top: 10px;
         margin: 10px 80px;
         display: inline-block;
+    }
+
+    #forgot_form {
+        position: relative;
+        top: 10px;
+        margin: -10px 80px;
+        display: block;
     }
 
 
@@ -51,6 +70,17 @@
         left: 70%;
     }
 
+    #forgotBtn {
+        position: relative;
+        background-color: #323232;
+        border: 2px #cacaca;
+        border-radius: 3px;
+        width: 130px;
+        height: 40px;
+        color: #f0f0f0;
+        left: 28%;
+    }
+
     h1 {
         position: relative;
         top: 25px;
@@ -68,8 +98,9 @@
         background-color: #e15848;
         color: #e1e1e1;
         text-align: center;
-        border-radius: 0 0 20px 20px;
+        border-radius: 20px 20px 20px 20px;
         font-size: 20px;
+        margin: -10px;
 
     }
 </style>
