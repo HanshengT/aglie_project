@@ -10,19 +10,25 @@
 <body>
     <nav class="navbar navbar-expand-md bg-dark">
         <div class="container">
-            <h4 class="text-light">Welcome back, {{user}}</h4>
-            <img src="/images/Logo2.png" alt="" width="60" height="60">
+            <h3 class="text-light">Welcome back, {{user}}</h3>
+            <img class="logo" src="/images/Logo2.png" alt="" width="70" height="70">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Settings?
+                        <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="dropdown-menu bg-dark">
-                        <a class="dropdown-item text-light" href="#">Reset Password</a>
+                    <div class="drop dropdown-menu bg-dark">
+                        <form name="setting" method="all" action="/reset-password">
+                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
+                        </form>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-light" href="#">Sign-Out</a>
+                        <form name="setting" method="all" action="/logout">
+                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
+                        </form>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-light" href="#">Other</a>
+                        <form name="setting" method="all" action="#">
+                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -30,11 +36,15 @@
     </nav>
     <div class="bg-danger"><br></div>
 
+    <div class="bg-danger score" id="content">
+        <h4 class="text-light" id="score">All-time Score: {{score}}</h4>
+    </div>
+
     <br>
 
     <div class="container">
 
-        <div class="row">
+        <div class="container row">
             <div class="col-md-4">
                 <div class="card mb-4 box-shadow">
                     <img class="card-img-top" src="/images/roulette.png" alt="">
@@ -67,31 +77,6 @@
     </div>
 
     <!-- Roulette Modal -->
-    <div class="modal fade" id="CardPopup" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="container">
-                    <img class="card-img-top" src="/images/card.png" alt="">
-                    <br>
-                    <div class="modal-footer">
-                        <div class="row vdivide">
-                            <div class="col-sm-6 text-center">
-                                <p>In this game you can blah blah blah</p>
-                            </div>
-                            <div class="col-sm-6 text-center">
-                                <button type="button" onclick="" class="btn btn-danger" data-dismiss="modal">Play</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- Game Modal -->
     <div class="modal fade" id="RoulettePopup" role="dialog">
         <div class="modal-dialog">
 
@@ -106,7 +91,33 @@
                                 <p>In this game you can blah blah blah</p>
                             </div>
                             <div class="col-sm-6 text-center">
-                                <button type="button" onclick="" class="btn btn-danger" data-dismiss="modal">Play</button>
+                                <a href="/game"><button id="enter_game" class="btn btn-danger">Play</button></a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Cards Modal -->
+    <div class="modal fade" id="CardPopup" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="container">
+                    <img class="card-img-top" src="/images/card.png" alt="">
+                    <br>
+                    <div class="modal-footer">
+                        <div class="row vdivide">
+                            <div class="col-sm-6 text-center">
+                                <p>In this game you can blah blah blah</p>
+                            </div>
+                            <div class="col-sm-6 text-center">
+                                <a href="/game"><button id="enter_game" class="btn btn-danger">Play</button></a>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -123,7 +134,19 @@
 
 </body>
 <style>
-
+    .navbar-toggler-icon{
+        background-image: url('https://mdbootstrap.com/img/svg/hamburger3.svg?color=fff');
+    }
+    .score{
+        border-bottom-right-radius: 8px;
+        width: 20%;
+        position: relative;
+        padding: 5px;
+        text-align: center;
+    }
+    .btn:hover {
+        color: #383e48;
+        background-color: #dc3545;
+    }​
 </style>
-
 </html>
