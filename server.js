@@ -79,10 +79,12 @@ app.get('/profile', function(request, response) {
     db.collection('users').find({
         username: request.session.user.username
     }).toArray(function(err, result) {
-        response.render('profilepage.hbs', {
+        response.render('profile.hbs', {
             title: 'Account',
             username: request.session.user.username,
-            score: result[0].score
+            scoreT: result[0].scoreT,
+            score: result[0].score,
+            score1: result[0].score1,
         });
     })
 });
@@ -94,13 +96,14 @@ app.get('/game', function(request, response) {
         username: request.session.user.username
     }).toArray(function(err, result) {
         response.render('game.hbs', {
-            title: 'Game',
             username: request.session.user.username,
+            title: 'Roulette',
             score: result[0].score
         });
 
     })
 });
+
 
 app.get('/404', function(request, response) {
     response.send('Page Not Fount');
@@ -111,12 +114,19 @@ app.get('/save-score/:score', function(request, response) {
 
     var score = Number(request.params.score)
 
-    db.collection('users').updateOne({
-        "username": request.session.user.username
+    db.collection('users').find({
+        username: request.session.user.username
+    }).toArray(function(err, result) {
+        var scoreT = score + request.session.user.score1
+        console.log(score);
+        console.log(scoreT);
+        db.collection('users').updateOne({
+            "username": request.session.user.username
 
-    }, { $set: { "score": score } }, function(error, result) {
-        response.redirect(`/profile`)
-    })
+        }, { $set: { "scoreT": scoreT, "score": score } }, function(error, result) {
+            response.redirect(`/profile`)
+        })
+    });
 })
 
 app.post('/create-user', function(request, response) {
@@ -160,8 +170,10 @@ app.post('/create-user', function(request, response) {
                 email: email,
                 token: token,
                 tokenExpire: tokenExpires,
+                scoreT: 0,
                 score: 0,
-                score1:0
+                score1: 0,
+                score2: 0
             }, (err, result) => {
                 if (err) {
                     response.render('simple_response.hbs', {
@@ -197,6 +209,7 @@ app.post('/login-user', function(request, response) {
                     id: result[0]._id,
                     token: result[0].token,
                     tokenExpire: result[0].tokenExpire,
+                    scoreT: result[0].scoreT,
                     score: result[0].score,
                     score1: result[0].score1
                 };
@@ -243,7 +256,6 @@ app.post('/reset', function(request, response) {
                 token: result[0].token,
                 tokenExpire: result[0].tokenExpire,
                 score: result[0].score,
-                score1: result[0].score1,
             };
 
             crypto.randomBytes(15, function(err, buf) {
@@ -363,6 +375,7 @@ app.post('/reset/:token', function(request, response) {
         }
     });
 });
+
 // Game 2 - Card Game
 
 var deck = 0;
