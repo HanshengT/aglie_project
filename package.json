@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server.js"
   },
   "author": "",
@@ -24,7 +24,8 @@
     "nodemailer": "^6.1.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.1"
+    "passport-local-mongoose": "^5.0.1",
+    "request": "^2.88.0"
   },
   "repository": {
     "type": "git",
@@ -34,5 +35,9 @@
     "url": "https://github.com/Pingu18/NodeProject/issues"
   },
   "homepage": "https://github.com/Pingu18/NodeProject#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
 }
