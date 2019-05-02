@@ -67,7 +67,7 @@
 <body>
 	<div id="content">
 		<h1>Succeed!</h1>
-		<p id="notification">Congratulation <b>{{user}}</b>, you have been successfully registered</p>		
+		<p id="notification">Congratulation <b>{{username}}</b>, you have been successfully registered</p>		
 		<a href="/"><button class="Btn">Login Now!</button></a>
 		<p id="second"></p>
 	</div>
@@ -76,7 +76,7 @@
 	var countdown=5;
     function cd() {
         if (countdown == 0) {
-        	clearTimeout(countdown_func)
+        	clearTimeout(countdown_func);
             window.location.href="/";
             countdown = 5;
         } else {

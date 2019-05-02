@@ -11,6 +11,7 @@ const async = require('async');
 const { google } = require('googleapis');
 const atoken = "ya29.GlvmBrkOyJpvGJMrHC3qHNRkWTniML2DgCTQ26yjbnrkQyCr2R6P5-l6XYPg9nkvkM3Kl4XXYd4iMEDCC-XoFEELZhyTTI83Bh9qyQv3uN0TIcf53jLddDqsmXsD";
 const saltrounds = 10;
+const backend = require('./backend');
 const port = process.env.PORT || 8080;
 
 var app = express();
@@ -68,7 +69,7 @@ app.get('/succeed/:username', function(request, response) {
     console.log(request.params.username);
     response.render('register_succeed.hbs', {
         title: 'Succeed',
-        user: request.params.username
+        username: request.params.username
     });
 });
 
@@ -78,9 +79,9 @@ app.get('/profile', function(request, response) {
     db.collection('users').find({
         username: request.session.user.username
     }).toArray(function(err, result) {
-        response.render('profile.hbs', {
+        response.render('profilepage.hbs', {
             title: 'Account',
-            user: request.session.user.username,
+            username: request.session.user.username,
             score: result[0].score
         });
     })
@@ -94,7 +95,7 @@ app.get('/game', function(request, response) {
     }).toArray(function(err, result) {
         response.render('game.hbs', {
             title: 'Game',
-            user: request.session.user.username,
+            username: request.session.user.username,
             score: result[0].score
         });
 
@@ -159,7 +160,8 @@ app.post('/create-user', function(request, response) {
                 email: email,
                 token: token,
                 tokenExpire: tokenExpires,
-                score: 0
+                score: 0,
+                score1:0
             }, (err, result) => {
                 if (err) {
                     response.render('simple_response.hbs', {
@@ -196,6 +198,7 @@ app.post('/login-user', function(request, response) {
                     token: result[0].token,
                     tokenExpire: result[0].tokenExpire,
                     score: result[0].score,
+                    score1: result[0].score1
                 };
                 response.redirect('/profile');
             } else {
@@ -240,6 +243,7 @@ app.post('/reset', function(request, response) {
                 token: result[0].token,
                 tokenExpire: result[0].tokenExpire,
                 score: result[0].score,
+                score1: result[0].score1,
             };
 
             crypto.randomBytes(15, function(err, buf) {
@@ -359,6 +363,184 @@ app.post('/reset/:token', function(request, response) {
         }
     });
 });
+// Game 2 - Card Game
+
+var deck = 0;
+var card = 0;
+var card2 = 0;
+var cardback = "https://playingcardstop1000.com/wp-content/uploads/2018/11/Back-Russian-historical-cards-200x300.jpg"
+var score = 0;
+var current_username = undefined
+
+hbs.registerHelper('getCurrentYear', () => {
+    return new Date().getFullYear();
+});
+
+hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerHelper('breaklines', function (text) {
+    text = hbs.Utils.escapeExpression(text);
+    text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+    return new hbs.SafeString(text);
+});
+
+
+
+app.get('/game1', async function(request, response) {
+    deck = await backend.getDeck(1);
+
+    var db = utils.getDB();
+
+    db.collection('users').find({
+        username: request.session.user.username
+    }).toArray(function(err, result) {
+        renderGame(request, response, "disabled", cardback, cardback, deck.remaining, "")
+        
+    })
+});
+
+app.post('/newgame', async (request,response) => {
+    score = 0;
+    try {
+        deck = await backend.shuffleDeck(deck.deck_id);
+        card = await backend.drawDeck(deck.deck_id, 1);
+        card2 = await backend.drawDeck(deck.deck_id, 1);
+        renderGame(request, response, "", card.cards[0].image, cardback, card.remaining, "")
+    }catch(e){
+        console.log(e)
+    }
+});
+
+app.post('/bigger', async (request,response) => {
+    try {
+        if(getNumeric(card.cards[0].value) < getNumeric(card2.cards[0].value)){
+            score+=1;
+            card = card2;
+            if(card2.remaining > 0) {
+                card2 = await backend.drawDeck(deck.deck_id, 1);
+                renderGame(request, response, "", card.cards[0].image, cardback, card.remaining,"")
+            }else {
+                var win_message = `Congratulations, you have finished the deck with ${score} point`;
+                if(current_username !== undefined){
+                    await backend.saveHighScore(current_username.username, score)
+                }
+                renderGame(request, response, "", card.cards[0].image, cardback, card.remaining, win_message)
+            }
+        }else{
+            var lose_message = `Sorry, you have lost with ${score}`;
+            if(current_username !== undefined){
+                await backend.saveHighScore(current_username.username, score);
+                lose_message = `New Personal High Score ${score}`
+            }
+            renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
+                lose_message)
+            score = 0;
+        }
+    }catch(e){
+        console.log(e)
+    }
+});
+
+app.post('/tie', async (request,response) => {
+    try {
+        if (getNumeric(card.cards[0].value) === getNumeric(card2.cards[0].value)) {
+            score += 4;
+            card = card2;
+            if(card2.remaining > 0) {
+                card2 = await backend.drawDeck(deck.deck_id, 1);
+                renderGame(request, response, "", card.cards[0].image, cardback, card.remaining,"")
+            }else{
+                var win_message = `Congratulations, you have finished the deck with ${score} point`;
+                if(current_username !== undefined){
+                    await backend.saveHighScore(current_username.username, score)
+                }
+                renderGame(request, response, "", card.cards[0].image, cardback, card.remaining, win_message)
+            }
+        } else {
+            var lose_message = `Sorry, you have lost with ${score}`;
+            if(current_username !== undefined){
+                await backend.saveHighScore(current_username.username, score);
+                lose_message = `New Personal High Score ${score}`
+            }
+            renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
+                       lose_message);
+            score = 0;
+        }
+    }catch(e){
+        console.log(e)
+    }
+});
+
+app.post('/smaller', async (request,response) => {
+    try {
+        if (getNumeric(card.cards[0].value) > getNumeric(card2.cards[0].value)) {
+            score += 1;
+            card = card2;
+            if(card2.remaining > 0) {
+                card2 = await backend.drawDeck(deck.deck_id, 1);
+                renderGame(request, response, "", card.cards[0].image, cardback, card.remaining,"")
+            }else{
+                var win_message = `Congratulations, you have finished the deck with ${score} point`;
+                if(current_username !== undefined){
+                    await backend.saveHighScore(current_username.username, score)
+                }renderGame(request, response, "", card.cards[0].image, cardback, card.remaining, win_message)
+            }
+        } else {
+            var lose_message = `Sorry, you have lost with ${score}`;
+            if(current_username !== undefined){
+                await backend.saveHighScore(current_username.username, score);
+                lose_message = `New Personal High Score ${score}`
+            }
+            renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
+                lose_message)
+            score = 0;
+        }
+    }catch (e) {
+        console.log(e)
+    }
+});
+
+app.get(`/deck`, async (request, response) => {
+    try {
+        deck = await backend.getDeck(1);
+        renderGame(request, response, "disabled", cardback, cardback, deck.remaining, "")
+    }catch(e){
+        console.log(e)
+    }
+});
+
+function getNumeric(card){
+    var trimmed = card.trim()
+    if(trimmed === "KING"){
+        return 13
+    }else if(trimmed === "QUEEN"){
+        return 12
+    }else if(trimmed === "JACK"){
+        return 11
+    }else if(trimmed === "ACE"){
+        return 1
+    }else{
+        return parseInt(trimmed)
+    }
+}
+
+function renderGame(request, response, state, first_card, second_card, remaining, game_state){
+    if(current_username !== undefined){
+        var name = current_username.username
+    }
+    response.render('game1.hbs', {
+        title: 'Big or Small | Play Game',
+        card: first_card,
+        card2: second_card,
+        bigger:state,
+        smaller:state,
+        tie: state,
+        score: score,
+        remaining: remaining,
+        username: request.session.user.username,
+        game_state: game_state
+    });
+}
+
 app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
     utils.init();
