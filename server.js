@@ -97,7 +97,7 @@ app.get('/game', function(request, response) {
     }).toArray(function(err, result) {
         response.render('game.hbs', {
             title: 'Roulette',
-            user: request.session.user.username,
+            username: request.session.user.username,
             score: result[0].score
         });
 
