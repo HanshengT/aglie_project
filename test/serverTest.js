@@ -1,5 +1,6 @@
 const assert = require('chai').assert
 const server = require('../server')
+const backend = require('../backend')
 
 describe('Check Numeric', function(){
 	it('change KING to 13', function(){
@@ -18,3 +19,24 @@ describe('Check Numeric', function(){
 		assert.equal(server.getNumeric('ACE'), 1)
 	})
 })
+
+describe('Account managing', function(){
+	it('create account', function(){
+		assert.equal(backend.accountCreate('TestUsername'), 'Account TestUsername Created')
+	})
+
+	it('show current score', function(){
+		assert.equal(backend.currentScore('TestUsername'), 0)
+	})
+
+	it('show high score', function(){
+		assert.equal(backend.highScore('TestUsername'), 0)
+	})
+
+	it('delete account', function(){
+		assert.equal(backend.accountDelete('TestUsername'), 'Account TestUsername Deleted')
+	})
+
+})
+
+
