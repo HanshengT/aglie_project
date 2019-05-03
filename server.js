@@ -117,7 +117,7 @@ app.get('/save-score/:score', function(request, response) {
     db.collection('users').find({
         username: request.session.user.username
     }).toArray(function(err, result) {
-        var scoreT = score + request.session.user.score1
+        var scoreT = score + result[0].score1
         console.log(score);
         console.log(scoreT);
         db.collection('users').updateOne({
@@ -547,7 +547,7 @@ app.get('/save-score', function(request, response) {
     }).toArray(function(err, result) {
         console.log(result[0].score1);
         if (score > result[0].score1) {
-            var scoreT = score + request.session.user.score
+            var scoreT = score + result[0].score
             console.log(score);
             console.log(scoreT);
             db.collection('users').updateOne({
