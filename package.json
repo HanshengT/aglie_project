@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha || true",
     "start": "node server.js"
   },
   "author": "",
@@ -35,5 +35,9 @@
     "url": "https://github.com/Pingu18/NodeProject/issues"
   },
   "homepage": "https://github.com/Pingu18/NodeProject#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
 }
