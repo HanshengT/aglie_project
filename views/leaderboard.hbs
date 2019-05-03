@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ranking</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark bar">
+        <div class="container">
+            <h3 class="text-light">Welcome back, {{user}}</h3>
+            <img class="logo" src="/public/images/Logo2.png" alt="" width="70" height="70">
+            <ul>
+                <li class="dropdown">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="drop dropdown-menu bg-dark">
+                        <form name="setting" method="all" action="/profile">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Profile Page</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="/reset-password">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="/logout">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="#">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="bg-danger"><br></div>
+
+    <!-- Cards -->
+    <div class="row align-items-center justify-content-center mt-5">
+        <div class="card m-4 box-shadow trans text-light" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Roulette</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Top 5 Highscores</h6>
+                <p class="card-text">1. </p>
+                <p class="card-text">2. </p>
+                <p class="card-text">3. </p>
+                <p class="card-text">4. </p>
+                <p class="card-text">5. </p>
+                <a href="#"><button id="enter_game" class="btn btn-danger">Play Game</button></a>
+            </div>
+        </div>
+        <div class="card m-4 box-shadow trans text-light" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Bigger or Smaller</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Top 5 Highscores</h6>
+                <p class="card-text">1. </p>
+                <p class="card-text">2. </p>
+                <p class="card-text">3. </p>
+                <p class="card-text">4. </p>
+                <p class="card-text">5. </p>
+                <a href="#"><button id="" class="btn btn-danger">Play Game</button></a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .navbar-toggler-icon{
+            background-image: url('https://mdbootstrap.com/img/svg/hamburger7.svg?color=fff');
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            right: 50%;
+            margin-left: -35px !important;  /* 50% of your logo width */
+            display: block;
+        }
+        .bar{
+            height: 80px;
+        }
+        .trans{
+            background: rgba(0,0,0,0.55);
+        }
+        body{
+            background-image: url("/images/background.jpeg");
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .navbtn:hover {
+            color: #383e48;
+            background-color: #dc3545;
+        }​
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
