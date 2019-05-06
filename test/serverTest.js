@@ -3,7 +3,10 @@ const server = require('../server')
 const backend = require('../backend')
 const chai = require('chai'), chaiHttp = require('chai-http')
 const request = require('supertest')
+const app = require('../app')
 
+
+const should = chai.should()
 chai.use(chaiHttp)
 
 describe('Check Numeric', function() {
@@ -48,14 +51,40 @@ describe('GET /', function() {
     it('return home page', function(done) {
     	request("http://localhost:8080")
         .get('/')
-        .expect(200, done)
+        .end(function(err,res) {
+        	res.should.have.status(200)
+        	done()
+        })
     })
+})
 
-
+describe('GET /register', function() {
     it('return register page', function(done) {
     	request("http://localhost:8080")
         .get('/register')
-        .expect(200, done)
+        .end(function(err,res) {
+        	res.should.have.status(200)
+        	done()
+        })
     })
 
+})
+
+/*describe('POST /login-user', function() {
+    it('return register page', function(done) {
+    	request("http://localhost:8080")
+        .post('/login-user')
+        .send({'username': '123', 'password': '123'})
+        .end(function(err,res) {
+        	res.should.have.status(200)
+        	done()
+        })
+    })
+
+})*/
+
+describe('isPrime function', function() {
+    it('should return Number is Prime', function() {
+        app.isPrime(35).should.be.equal('Number is Prime')
+    })
 })
