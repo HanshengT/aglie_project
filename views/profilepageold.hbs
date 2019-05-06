@@ -8,30 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body>
-    <nav class="navbar navbar-expand-md bg-dark bar">
+    <nav class="navbar navbar-expand-md bg-dark">
         <div class="container">
-            <h3 class="text-light">Welcome back, {{user}}</h3>
+            <h3 class="text-light">Welcome back, {{username}}</h3>
             <img class="logo" src="/images/Logo2.png" alt="" width="70" height="70">
-            <ul>
+            <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="drop dropdown-menu bg-dark">
-                        <form name="setting" method="all" action="/profile">
-                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Profile Page</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
                         <form name="setting" method="all" action="/reset-password">
-                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
+                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
                         </form>
                         <div class="dropdown-divider"></div>
                         <form name="setting" method="all" action="/logout">
-                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
+                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
                         </form>
                         <div class="dropdown-divider"></div>
                         <form name="setting" method="all" action="#">
-                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
+                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
                         </form>
                     </div>
                 </li>
@@ -41,7 +37,7 @@
     <div class="bg-danger"><br></div>
 
     <div class="bg-danger score" id="content">
-        <h4 class="text-light" id="score">Total Score: {{score}}</h4>
+        <h4 class="text-light" id="score">All-time Score: {{scoreT}}</h4>
     </div>
 
     <br>
@@ -50,29 +46,29 @@
 
         <div class="container row">
             <div class="col-md-4">
-                <div class="card mb-4 box-shadow trans text-light">
+                <div class="card mb-4 box-shadow">
                     <img class="card-img-top" src="/images/roulette.png" alt="">
                     <div class="card-body">
-                        <h4 class="card-text">Roulette</h4>
+                        <p class="card-text">Roulette</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" data-toggle="modal" data-target="#RoulettePopup" class="btn btn-sm btn-outline-light">View</button>
+                                <button type="button" data-toggle="modal" data-target="#RoulettePopup" class="btn btn-sm btn-outline-secondary">View</button>
                             </div>
-                            <small class="text-light">NEW!</small>
+                            <small class="text-muted">NEW!</small>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4 box-shadow trans text-light">
+                <div class="card mb-4 box-shadow">
                     <img class="card-img-top" src="/images/card.png" alt="">
                     <div class="card-body">
-                        <h4 class="card-text">Bigger or Smaller</h4>
+                        <p class="card-text">Bigger or Smaller</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" data-toggle="modal" data-target="#CardPopup" class="btn btn-sm btn-outline-light">View</button>
+                                <button type="button" data-toggle="modal" data-target="#CardPopup" class="btn btn-sm btn-outline-secondary">View</button>
                             </div>
-                            <small class="text-light">NEW!</small>
+                            <small class="text-muted">NEW!</small>
                         </div>
                     </div>
                 </div>
@@ -86,23 +82,18 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="container bg-dark text-light">
+                <div class="container">
                     <img class="card-img-top" src="/images/roulette.png" alt="">
                     <br>
-                    <div class="modal-body">
+                    <div class="modal-footer">
                         <div class="row vdivide">
                             <div class="col-sm-6 text-center">
-                                <p>Roulette</p>
+                                <p>In this game you can blah blah blah</p>
                             </div>
                             <div class="col-sm-6 text-center">
                                 <a href="/game"><button id="enter_game" class="btn btn-danger">Play</button></a>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="container">
-                            <h4>Score: {{score}}</h4>
                         </div>
                     </div>
                 </div>
@@ -117,23 +108,18 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="container bg-dark text-light">
+                <div class="container">
                     <img class="card-img-top" src="/images/card.png" alt="">
                     <br>
-                    <div class="modal-body">
+                    <div class="modal-footer">
                         <div class="row vdivide">
                             <div class="col-sm-6 text-center">
-                                <p>Card Game</p>
+                                <p>Its a card game</p>
                             </div>
                             <div class="col-sm-6 text-center">
                                 <a href="/game1"><button id="enter_game" class="btn btn-danger">Play</button></a>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer container">
-                        <div class="container">
-                            <h4>Score: {{score}}</h4>
                         </div>
                     </div>
                 </div>
@@ -149,36 +135,16 @@
 </body>
 <style>
     .navbar-toggler-icon{
-        background-image: url('https://mdbootstrap.com/img/svg/hamburger7.svg?color=fff');
+        background-image: url('https://mdbootstrap.com/img/svg/hamburger3.svg?color=fff');
     }
     .score{
         border-bottom-right-radius: 8px;
         width: 20%;
+        position: relative;
         padding: 5px;
         text-align: center;
     }
-    .logo {
-        position: absolute;
-        left: 50%;
-        right: 50%;
-        margin-left: -35px !important;  /* 50% of your logo width */
-        display: block;
-    }
-    .bar{
-        height: 80px;
-    }
-    .trans{
-        background: rgba(0,0,0,0.55);
-    }
-    body{
-        background-image: url("/images/background.jpeg");
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-    .navbtn:hover {
+    .btn:hover {
         color: #383e48;
         background-color: #dc3545;
     }​
