@@ -65,6 +65,12 @@ app.get('/register', function(request, response) {
     });
 });
 
+app.get('/leaderboard', function(request, response) {
+    response.render('leaderboard.hbs', {
+        title: 'Leaderboard'
+    });
+});
+
 app.get('/succeed/:username', function(request, response) {
     console.log(request.params.username);
     response.render('register_succeed.hbs', {

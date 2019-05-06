@@ -1,97 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en">
+    <meta charset="UTF-8">
+    <title>My profile</title>
 
-<meta charset="UTF-8">
-
-
-<title>Register</title>
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body>
-    <div id="content">
-        <h1>Register</h1>
-
-        <div id="reg_form">
-
-            <form action="/create-user" method="POST">
-                <input name="username" type="text" placeholder="    Username" required="required"> <br>
-                <input name="password" type="password" placeholder="    Password" required="required"> <br>
-                <input name="password_confirm" type="password" placeholder="    Confirm Password" required="required"> <br>
-                <input name="email" type="email" placeholder="    Email" required> <br>
-                <input type="submit" id="regBtn">
-            </form>
-
+    <nav class="navbar navbar-expand-md bg-dark bar">
+        <div class="container">
+            <h3 class="text-light">{{user}}</h3>
+            <img class="logo" src="/images/Logo2.png" alt="" width="70" height="70">
+            <ul>
+            </ul>
         </div>
-        <p id="sign_in">Already have an account? <a href="/">Sign In</a></p>
+    </nav>
+    <div class="bg-danger"><br></div>
+
+    <br>
+
+    <div class="jumbotron container trans text-light">
+        <div class="container" id="content">
+            <h1>Register</h1>
+            <div class="form-group mb-2" id="reg_form">
+                <form class="" action="/create-user" method="POST">
+                    <div class="form-group mx-sm-3">
+                        <label for="userBtn"></label>
+                        <input class="form-control mb-2" name="username" type="text" placeholder="Username" id="userBtn" required="required">
+                    </div>
+                    <div class="form-group mx-sm-3">
+                        <label for="passwordBtn"></label>
+                        <input class="form-control mb-2" name="password" type="password" placeholder="Password" id="passwordBtn" required="required">
+                    </div>
+                    <div class="form-group mx-sm-3">
+                        <label for="passwordBtn2"></label>
+                        <input class="form-control mb-2" name="password2" type="password" placeholder="Confirm Password" id="passwordBtn2" required="required">
+                    </div>
+                    <div class="form-group mx-sm-3">
+                        <label for="emailBtn"></label>
+                        <input class="form-control mb-2" name="email" type="email" placeholder="Email" id="emailBtn" required="required">
+                    </div>
+                    <div class="form-group mx-sm-3">
+                        <label for="regBtn"></label>
+                        <input class="btn btn-primary" type="submit" id="regBtn">
+                    </div>
+                </form>
+            </div>
+            <br>
+            <div class="form-group">
+                <p id="sign_in">Already have an account? <a href="/">Sign In</a></p>
+            </div>
+        </div>
     </div>
 
-        
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </body>
 <style>
-    body {
-    background-color: #323232;
-}
-
-#content{
-    margin: 100px auto;
-    width: 500px;
-    height: 400px;
-    background-color: #e1e1e1;
-    border-radius: 20px;
-}
-
-#reg_form {
-    position: relative;
-    top: 10px;
-    margin: 10px 80px;
-    display: inline-block;
-}
-
-
-input {
-    border-radius: 10px;
-    background-color: #cacaca;
-    padding: 2px;
-    margin: 10px auto;
-    width: 350px;
-    height: 40px;
-    box-shadow: none;
-    border: none;
-}
-
-#regBtn{
-    position: relative;
-    background-color: #e15848;
-    width: 80px;
-    height: 40px;
-    color: #e1e1e1;
-    left: 70%;
-}
-
-h1 {
-    position: relative;
-    top: 25px;
-    left: 35px;
-    margin: 25px 40px;
-    font-family: 'Roboto', sans-serif;
-    color: #e15848;
-}
-
-#sign_in{
-    position: relative;
-    height: 50px;
-    top: 10px;
-    line-height: 48px;
-    background-color: #e15848;
-    color: #e1e1e1;
-    text-align: center;
-    border-radius: 0 0 20px 20px;
-    font-size: 20px;
-
-}
+    .navbar-toggler-icon{
+        background-image: url('https://mdbootstrap.com/img/svg/hamburger7.svg?color=fff');
+    }
+    .logo {
+        position: absolute;
+        left: 50%;
+        right: 50%;
+        margin-left: -35px !important;  /* 50% of your logo width */
+        display: block;
+    }
+    .bar{
+        height: 80px;
+    }
+    .trans{
+        background: rgba(0,0,0,0.55);
+    }
+    body{
+        background-image: url("/images/background.jpeg");
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .navbtn:hover {
+        color: #383e48;
+        background-color: #dc3545;
+    }​
 </style>
-
-<script src="/scripts.js"></script>
-
 </html>
