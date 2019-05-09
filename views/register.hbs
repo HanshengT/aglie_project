@@ -10,18 +10,23 @@
 <body>
     <nav class="navbar navbar-expand-md bg-dark bar">
         <div class="container">
-            <h3 class="text-light">{{user}}</h3>
-            <img class="logo" src="/images/Logo2.png" alt="" width="70" height="70">
-            <ul>
+            <img class="" src="/images/Logo2.png" alt="" width="70" height="70">
+            <h5 class="text-light"></h5>
+            <ul class="nobull">
             </ul>
         </div>
     </nav>
-    <div class="bg-danger"><br></div>
+    <div class="bg-danger divider"></div>
 
     <br>
 
     <div class="jumbotron container trans text-light">
         <div class="container" id="content">
+            <div class="form-group" align="right">
+                <form name="setting" method="all" action="/">
+                    <button class="btn btn-danger text-light" name="setting" type="submit">Back to Home Page</button>
+                </form>
+            </div>
             <h1>Register</h1>
             <div class="form-group mb-2" id="reg_form">
                 <form class="" action="/create-user" method="POST">
@@ -74,10 +79,16 @@
         height: 80px;
     }
     .trans{
-        background: rgba(0,0,0,0.55);
+        background: rgba(0,0,0,0.7);
+    }
+    .divider{
+        height: 10px;
+    }
+    .nobull{
+        list-style-type: none;
     }
     body{
-        background-image: url("/images/background.jpeg");
+        background-image: url("/images/background2.jpeg");
         height: 100%;
         background-size: cover;
         background-position: center;

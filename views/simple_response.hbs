@@ -10,35 +10,13 @@
 <body>
     <nav class="navbar navbar-expand-md bg-dark bar">
         <div class="container">
-            <h3 class="text-light">{{user}}</h3>
-            <img class="logo" src="/images/Logo2.png" alt="" width="70" height="70">
-            <ul>
-                <li class="dropdown">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="drop dropdown-menu bg-dark">
-                        <form name="setting" method="all" action="/profile">
-                        <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Profile Page</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <form name="setting" method="all" action="/reset-password">
-                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <form name="setting" method="all" action="/logout">
-                            <button class="sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <form name="setting" method="all" action="/leaderboard">
-                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
-                        </form>
-                    </div>
-                </li>
+            <img class="" src="/images/Logo2.png" alt="" width="70" height="70">
+            <h5 class="text-light"></h5>
+            <ul class="nobull">
             </ul>
         </div>
     </nav>
-    <div class="bg-danger"><br></div>
+    <div class="bg-danger divider"></div>
 
     <br>
 
@@ -76,10 +54,16 @@
         height: 80px;
     }
     .trans{
-        background: rgba(0,0,0,0.55);
+        background: rgba(0,0,0,0.7);
+    }
+    .divider{
+        height: 10px;
+    }
+    .nobull{
+        list-style-type: none;
     }
     body{
-        background-image: url("/images/background.jpeg");
+        background-image: url("/images/background2.jpeg");
         height: 100%;
         background-size: cover;
         background-position: center;
