@@ -291,6 +291,14 @@ app.get('/reset-password', function(request, response) {
     response.render('pass_reset.hbs');
 });
 
+app.get('/change-password', function(request, response) {
+    response.render('pass_change.hbs');
+});
+
+app.get('/leaderboard', function(request, response) {
+    response.render('leaderboard.hbs');
+});
+
 app.post('/reset', function(request, response) {
     var db = utils.getDB();
 
