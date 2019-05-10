@@ -177,8 +177,6 @@ app.get('/save-score/:score', function(request, response) {
         username: request.session.user.username
     }).toArray(function(err, result) {
         var scoreT = score + result[0].score1
-        console.log(score);
-        console.log(scoreT);
         db.collection('users').updateOne({
             "username": request.session.user.username
 
