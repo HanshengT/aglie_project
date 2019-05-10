@@ -511,7 +511,7 @@ app.post('/bigger', async (request, response) => {
             }
             renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
                 lose_message)
-            score = 0;
+            // score = 0;
         }
     } catch (e) {
         console.log(e)
@@ -541,7 +541,7 @@ app.post('/tie', async (request, response) => {
             }
             renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
                 lose_message);
-            score = 0;
+            // score = 0;
         }
     } catch (e) {
         console.log(e)
@@ -571,7 +571,7 @@ app.post('/smaller', async (request, response) => {
             }
             renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
                 lose_message)
-            score = 0;
+            // score = 0;
         }
     } catch (e) {
         console.log(e)

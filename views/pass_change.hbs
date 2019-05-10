@@ -11,7 +11,7 @@
     <nav class="navbar navbar-expand-md bg-dark bar">
         <div class="container">
             <img class="" src="/images/Logo2.png" alt="" width="70" height="70">
-            <h5 class="text-light"></h5>
+            <h5 class="text-light">Welcome back, {{username}}</h5>
             <ul class="nobull">
                 <li class="dropdown">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -21,6 +21,11 @@
                         <form name="setting" method="all" action="/profile">
                             <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Profile Page</button>
                         </form>
+                        
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="/leaderboard">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
+                        </form>
                         <div class="dropdown-divider"></div>
                         <form name="setting" method="all" action="/change-password">
                             <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
@@ -28,10 +33,6 @@
                         <div class="dropdown-divider"></div>
                         <form name="setting" method="all" action="/logout">
                             <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <form name="setting" method="all" action="/leaderboard">
-                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
                         </form>
                     </div>
                 </li>
