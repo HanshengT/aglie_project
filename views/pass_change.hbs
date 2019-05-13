@@ -11,8 +11,31 @@
     <nav class="navbar navbar-expand-md bg-dark bar">
         <div class="container">
             <img class="" src="/images/Logo2.png" alt="" width="70" height="70">
-            <h5 class="text-light"></h5>
+            <h5 class="text-light">Welcome back, {{username}}</h5>
             <ul class="nobull">
+                <li class="dropdown">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="drop dropdown-menu bg-dark">
+                        <form name="setting" method="all" action="/profile">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Profile Page</button>
+                        </form>
+                        
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="/leaderboard">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="/change-password">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="/logout">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
+                        </form>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -23,11 +46,11 @@
     <div class="jumbotron container trans text-light">
         <div class="container" id="content">
             <div class="form-group" align="right">
-                <form name="setting" method="all" action="/">
-                    <button class="btn btn-danger text-light" name="setting" type="submit">Back to Home Page</button>
+                <form name="setting" method="all" action="/profile">
+                    <button class="btn btn-danger text-light" name="setting" type="submit">Back to Profile Page</button>
                 </form>
             </div>
-            <h1>Reset Password</h1>
+            <h1>Change Password</h1>
             <div class="form-group mb-2">
                 <form class="form-inline" action="/reset" method="POST">
                     <div>
