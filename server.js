@@ -79,6 +79,65 @@ app.get('/succeed/:username', function(request, response) {
     });
 });
 
+app.get('/leaderboard', function(request, response) {
+    var db = utils.getDB();
+
+    db.collection('users').find({
+
+    }).toArray(function(err, result) {
+
+        var r_ranking = []
+        var c_ranking = []
+
+        result.forEach(function(item, index) {
+            r_ranking.push(['Username: '+ item.username + '  >>  Score: ', item.score])
+            c_ranking.push(['Username: '+ item.username + '  >>  Score: ', item.score1])
+        })
+        r_ranking.sort(function(a, b) {
+            if (a[1] < b[1]) {
+                return 1;
+            }
+            if (a[1] > b[1]) {
+                return -1;
+            }
+            return 0;
+        })
+        if (r_ranking.length != 5) {
+            r_ranking.push(['', ''], ['', ''], ['', ''], ['', ''], ['', ''])
+            r_ranking.splice(4, r_ranking.length - 5)
+        }
+
+        c_ranking.sort(function(a, b) {
+            if (a[1] < b[1]) {
+                return 1;
+            }
+            if (a[1] > b[1]) {
+                return -1;
+            }
+            return 0;
+        })
+        if (c_ranking.length != 5) {
+            c_ranking.push(['', ''], ['', ''], ['', ''], ['', ''], ['', ''])
+            c_ranking.splice(4, c_ranking.length - 5)
+        }
+
+        response.render('leaderboard.hbs', {
+            title: 'Leaderboard',
+            r_1: r_ranking[0][0] + r_ranking[0][1],
+            r_2: r_ranking[1][0] + r_ranking[1][1],
+            r_3: r_ranking[2][0] + r_ranking[2][1],
+            r_4: r_ranking[3][0] + r_ranking[3][1],
+            r_5: r_ranking[4][0] + r_ranking[4][1],
+            c_1: c_ranking[0][0] + c_ranking[0][1],
+            c_2: c_ranking[1][0] + c_ranking[1][1],
+            c_3: c_ranking[2][0] + c_ranking[2][1],
+            c_4: c_ranking[3][0] + c_ranking[3][1],
+            c_5: c_ranking[4][0] + c_ranking[4][1],
+            
+        });
+    })
+})
+
 app.get('/profile', function(request, response) {
     var db = utils.getDB();
 
@@ -124,8 +183,6 @@ app.get('/save-score/:score', function(request, response) {
         username: request.session.user.username
     }).toArray(function(err, result) {
         var scoreT = score + result[0].score1
-        console.log(score);
-        console.log(scoreT);
         db.collection('users').updateOne({
             "username": request.session.user.username
 
@@ -460,7 +517,7 @@ app.post('/bigger', async (request, response) => {
             }
             renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
                 lose_message)
-            score = 0;
+            // score = 0;
         }
     } catch (e) {
         console.log(e)
@@ -490,7 +547,7 @@ app.post('/tie', async (request, response) => {
             }
             renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
                 lose_message);
-            score = 0;
+            // score = 0;
         }
     } catch (e) {
         console.log(e)
@@ -520,7 +577,7 @@ app.post('/smaller', async (request, response) => {
             }
             renderGame(request, response, "disabled", card.cards[0].image, card2.cards[0].image, card.remaining,
                 lose_message)
-            score = 0;
+            // score = 0;
         }
     } catch (e) {
         console.log(e)

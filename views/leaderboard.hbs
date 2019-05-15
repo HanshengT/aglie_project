@@ -13,7 +13,8 @@
     <nav class="navbar navbar-expand-md bg-dark bar">
         <div class="container">
             <img class="" src="/images/Logo2.png" alt="" width="70" height="70">
-            <h5 class="text-light"></h5>
+
+            <h5 class="text-light">Leaderboards</h5>
             <ul class="nobull">
                 <li class="dropdown">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,6 +24,11 @@
                         <form name="setting" method="all" action="/profile">
                             <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Profile Page</button>
                         </form>
+                        
+                        <div class="dropdown-divider"></div>
+                        <form name="setting" method="all" action="/leaderboard">
+                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
+                        </form>
                         <div class="dropdown-divider"></div>
                         <form name="setting" method="all" action="/change-password">
                             <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Reset Password</button>
@@ -30,10 +36,6 @@
                         <div class="dropdown-divider"></div>
                         <form name="setting" method="all" action="/logout">
                             <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Sign Out</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <form name="setting" method="all" action="/leaderboard">
-                            <button class="navbtn sidebar btn dropdown-item text-light" name="setting" type="submit">Leaderboard</button>
                         </form>
                     </div>
                 </li>
@@ -44,27 +46,27 @@
 
     <!-- Cards -->
     <div class="container row align-items-center justify-content-center mt-4">
-        <div class="card m-4 box-shadow trans text-light" style="width: 18rem;">
+
+        <div class="card m-4 box-shadow trans text-light" style="width: 23rem;">
+
             <div class="card-body text-light">
                 <h3 class="card-title">Roulette</h3>
-                <h6 class="card-subtitle mb-2">Highscores:</h6>
-                <p class="card-text">1. {{p1-1}}</p>
-                <p class="card-text">2. {{p1-2}}</p>
-                <p class="card-text">3. {{p1-3}}</p>
-                <p class="card-text">4. {{p1-4}}</p>
-                <p class="card-text">5. {{p1-5}}</p>
+                <p class="card-text" style="font-size:24px">1. {{r_1}}</p>
+                <p class="card-text" style="font-size:20px">2. {{r_2}}</p>
+                <p class="card-text">3. {{r_3}}</p>
+                <p class="card-text">4. {{r_4}}</p>
+                <p class="card-text">5. {{r_5}}</p>
                 <a href="/game"><button id="enter_game" class="btn btn-danger">Play</button></a>
             </div>
         </div>
-        <div class="card m-4 box-shadow trans text-light" style="width: 18rem;">
+        <div class="card m-4 box-shadow trans text-light" style="width: 23rem;">
             <div class="card-body text-light">
                 <h3 class="card-title">Bigger or Smaller</h3>
-                <h6 class="card-subtitle mb-2">Highscores:</h6>
-                <p class="card-text">1. {{p2-1}}</p>
-                <p class="card-text">2. {{p2-2}}</p>
-                <p class="card-text">3. {{p2-3}}</p>
-                <p class="card-text">4. {{p2-4}}</p>
-                <p class="card-text">5. {{p2-5}}</p>
+                <p class="card-text" style="font-size:24px">1. {{c_1}}</p>
+                <p class="card-text" style="font-size:20px">2. {{c_2}}</p>
+                <p class="card-text">3. {{c_3}}</p>
+                <p class="card-text">4. {{c_4}}</p>
+                <p class="card-text">5. {{c_5}}</p>
                 <a href="/game1"><button id="enter_game" class="btn btn-danger">Play</button></a>
             </div>
         </div>

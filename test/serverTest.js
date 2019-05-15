@@ -81,10 +81,10 @@ describe('GET /register', function() {
         })
     })
 
-})*/
+})
 
 describe('isPrime function', function() {
     it('should return Number is Prime', function() {
         app.isPrime(35).should.be.equal('Number is Prime')
     })
-})
+})*/
