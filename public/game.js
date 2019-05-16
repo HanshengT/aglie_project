@@ -273,3 +273,4 @@ function StartGame() {
 function BackToProfile() {
     window.location.href = `/save-score/${player_score}`
 }
+
