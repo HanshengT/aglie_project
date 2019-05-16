@@ -446,7 +446,7 @@ app.post('/reset/:token', function(request, response) {
 var deck = 0;
 var card = 0;
 var card2 = 0;
-var cardback = "https://playingcardstop1000.com/wp-content/uploads/2018/11/Back-Russian-historical-cards-200x300.jpg"
+var cardback = "https://previews.123rf.com/images/bobyramone/bobyramone1206/bobyramone120600016/14167526-playing-card-back-side-30x60-mm.jpg"
 var score = 0;
 var current_username = undefined
 
