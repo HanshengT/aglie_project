@@ -213,7 +213,8 @@ app.post('/create-user', function(request, response) {
 
     if (password != password_confirm) {
         response.render('simple_response.hbs', {
-            h1: 'Passwords must match'
+            h1: 'Passwords must match',
+            url: '/register'
         });
         create = 0;
     };
@@ -223,7 +224,8 @@ app.post('/create-user', function(request, response) {
     }).toArray(function(err, result) {
         if (result[0] != null) {
             response.render('simple_response.hbs', {
-                h1: 'Email already in use'
+                h1: 'Email already in use',
+                url: '/register'
             })
             create = 0;
         };
@@ -246,14 +248,16 @@ app.post('/create-user', function(request, response) {
             }, (err, result) => {
                 if (err) {
                     response.render('simple_response.hbs', {
-                        h1: 'Unable to add user'
+                        h1: 'Unable to add user',
+                        url: '/register'
                     });
                 }
                 response.redirect(`/succeed/${username}`);
             });
         } else {
             response.render('simple_response.hbs', {
-                h1: 'Username not available'
+                h1: 'Username not available',
+                url: '/register'
             });
         }
     });
@@ -283,12 +287,14 @@ app.post('/login-user', function(request, response) {
                 response.redirect('/profile');
             } else {
                 response.render('simple_response.hbs', {
-                    h1: 'Incorrect Password'
+                    h1: 'Incorrect Password',
+                    url: '/'
                 });
             }
         } else {
             response.render('simple_response.hbs', {
-                h1: 'Username not found'
+                h1: 'Username not found',
+                url: '/'
             });
         }
     });
@@ -312,9 +318,12 @@ app.get('/leaderboard', function(request, response) {
 app.post('/reset', function(request, response) {
     var db = utils.getDB();
 
+    var url = '/reset-password'
+
     var username = request.body.username;
     if (username == null) {
         username = request.session.user.username
+        var url = '/change-password'
     }
     var email = request.body.email;
 
@@ -325,7 +334,8 @@ app.post('/reset', function(request, response) {
     var password_confirm = request.body.password_confirm;
     if (new_password != password_confirm) {
         response.render('simple_response.hbs', {
-            h1: 'Password does not match'
+            h1: 'Password does not match',
+            url: url
         })
     }
 
@@ -347,7 +357,8 @@ app.post('/reset', function(request, response) {
                     })
                 } else {
                     response.render('simple_response.hbs', {
-                        h1: 'Incorrect Email'
+                        h1: 'Incorrect Email',
+                        url: url
                     })
                 }
             } else {
@@ -360,20 +371,18 @@ app.post('/reset', function(request, response) {
                     })
                 } else {
                     response.render('simple_response.hbs', {
-                        h1: 'Incorrect Password'
+                        h1: 'Incorrect Password',
+                        url: url
                     });
                 }
             }
         } else {
             response.render('simple_response.hbs', {
-                h1: 'Username not found'
+                h1: 'Username not found',
+                url: url
             });
         }
     });
-});
-
-app.get('/cpwd', function(request, response) {
-    response.render('cpwd_test.hbs');
 });
 
 
