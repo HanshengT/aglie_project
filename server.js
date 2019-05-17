@@ -9,7 +9,6 @@ const flash = require('express-flash');
 const nodemailer = require('nodemailer');
 const async = require('async');
 const { google } = require('googleapis');
-const atoken = "ya29.GlvmBrkOyJpvGJMrHC3qHNRkWTniML2DgCTQ26yjbnrkQyCr2R6P5-l6XYPg9nkvkM3Kl4XXYd4iMEDCC-XoFEELZhyTTI83Bh9qyQv3uN0TIcf53jLddDqsmXsD";
 const saltrounds = 10;
 const backend = require('./backend');
 const port = process.env.PORT || 8080;
@@ -47,6 +46,23 @@ app.use('/game', (request, response, next) => {
     }
 });
 
+app.use('/game1', (request, response, next) => {
+    if (request.session.user) {
+        next();
+    } else {
+        response.status(401).send('User not authorized. Please log in.');
+    }
+});
+
+
+app.use('/change-password', (request, response, next) => {
+    if (request.session.user) {
+        next();
+    } else {
+        response.status(401).send('User not authorized. Please log in.');
+    }
+});
+
 
 app.all('/logout', (request, response) => {
     request.session.destroy();
@@ -66,7 +82,6 @@ app.get('/register', function(request, response) {
 });
 
 app.get('/succeed/:username', function(request, response) {
-    console.log(request.params.username);
     response.render('register_succeed.hbs', {
         title: 'Succeed',
         username: request.params.username
@@ -84,8 +99,8 @@ app.get('/leaderboard', function(request, response) {
         var c_ranking = []
 
         result.forEach(function(item, index) {
-            r_ranking.push(['Username: '+ item.username + '  >>  Score: ', item.score])
-            c_ranking.push(['Username: '+ item.username + '  >>  Score: ', item.score1])
+            r_ranking.push(['Username: ' + item.username + '  >>  Score: ', item.score])
+            c_ranking.push(['Username: ' + item.username + '  >>  Score: ', item.score1])
         })
         r_ranking.sort(function(a, b) {
             if (a[1] < b[1]) {
@@ -127,7 +142,7 @@ app.get('/leaderboard', function(request, response) {
             c_3: c_ranking[2][0] + c_ranking[2][1],
             c_4: c_ranking[3][0] + c_ranking[3][1],
             c_5: c_ranking[4][0] + c_ranking[4][1],
-            
+
         });
     })
 })
@@ -193,8 +208,7 @@ app.post('/create-user', function(request, response) {
     var password = request.body.password;
     var password_confirm = request.body.password_confirm;
     var email = request.body.email;
-    var token = "";
-    var tokenExpires = "";
+
     var create = 1;
 
     if (password != password_confirm) {
@@ -225,8 +239,6 @@ app.post('/create-user', function(request, response) {
                 username: username,
                 password: password,
                 email: email,
-                token: token,
-                tokenExpire: tokenExpires,
                 scoreT: 0,
                 score: 0,
                 score1: 0,
@@ -264,8 +276,6 @@ app.post('/login-user', function(request, response) {
                     username: result[0].username,
                     email: result[0].email,
                     id: result[0]._id,
-                    token: result[0].token,
-                    tokenExpire: result[0].tokenExpire,
                     scoreT: result[0].scoreT,
                     score: result[0].score,
                     score1: result[0].score1
@@ -285,10 +295,12 @@ app.post('/login-user', function(request, response) {
 
 });
 
+//not login
 app.get('/reset-password', function(request, response) {
     response.render('pass_reset.hbs');
 });
 
+//login
 app.get('/change-password', function(request, response) {
     response.render('pass_change.hbs');
 });
@@ -300,146 +312,74 @@ app.get('/leaderboard', function(request, response) {
 app.post('/reset', function(request, response) {
     var db = utils.getDB();
 
+    var username = request.body.username;
+    if (username == null) {
+        username = request.session.user.username
+    }
     var email = request.body.email;
-    var token;
+
+    var old_password = request.body.old_password;
+
+
+    var new_password = request.body.new_password
+    var password_confirm = request.body.password_confirm;
+    if (new_password != password_confirm) {
+        response.render('simple_response.hbs', {
+            h1: 'Password does not match'
+        })
+    }
+
+    var password = bcrypt.hashSync(new_password, saltrounds)
 
 
     db.collection('users').find({
-        email: email
-    }).toArray(function(err, result) {
-
-        if (!result[0]) {
-            response.render('simple_response.hbs', {
-                h1: 'No account with specified email'
-            });
-        } else {
-
-            request.session.user = {
-                username: result[0].username,
-                email: result[0].email,
-                id: result[0]._id,
-                token: result[0].token,
-                tokenExpire: result[0].tokenExpire,
-                score: result[0].score,
-            };
-
-            crypto.randomBytes(15, function(err, buf) {
-                token = buf.toString('hex');
-
-                db.collection('users').updateOne({ email: email }, {
-                    $set: {
-                        token: token,
-                        tokenExpire: Date.now() + 3600
-                    }
-                })
-
-                request.session.user.token = token
-                request.session.user.tokenExpire = Date.now() + 3600
-                request.session.save(function(err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                })
-            });
-
-            var auth = {
-                type: 'oauth2',
-                user: 'roulettegame.node@gmail.com',
-                clientId: process.env.client_id,
-                clientSecret: process.env.client_secret,
-                refreshToken: process.env.refresh_token,
-                accessToken: atoken
-            };
-
-            db.collection('users').find({
-                email: email
-            }).toArray(function(err, result) {
-                var mailOptions = {
-                    to: result[0].email,
-                    from: 'roulettegame.node@gmail.com',
-                    subject: 'Password Reset',
-                    text: 'The account linked to this email has requested a password reset. Click the following link and enter a new password. \n' + 'localhost:8080' +
-                        '/reset/' + request.session.user.token,
-                    auth: {
-                        user: 'roulettegame.node@gmail.com',
-                        refreshToken: process.env.refresh_token,
-                        accessToken: atoken
-                    }
-                };
-
-                console.log(request.session.user.token);
-
-                var transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: auth
-                });
-
-                transporter.sendMail(mailOptions, (err, response) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-
-                if (err) {
-                    console.log(err);
-                } else {
-                    response.render('simple_response.hbs', {
-                        h1: 'An email has been sent'
-                    });
-                }
-            });
-
-        }
-    });
-
-});
-
-app.get('/reset/:token', function(request, response) {
-    var db = utils.getDB();
-
-    db.collection('users').find({
-        token: request.params.token
-    }).toArray(function(err, result) {
-        if (result[0] == null) {
-            response.render('simple_response.hbs', {
-                h1: 'Invalid Token'
-            });
-        } else {
-            response.render('reset.hbs', {
-                username: result[0].username
-            });
-        }
-    });
-});
-
-app.post('/reset/:token', function(request, response) {
-    var db = utils.getDB();
-
-    var password = request.body.password;
-    password = bcrypt.hashSync(password, saltrounds);
-    var token = request.params.token;
-
-    db.collection('users').find({
-        token: token
+        username: username,
     }).toArray(function(err, result) {
         if (result[0] != null) {
-            db.collection('users').updateOne({ token: token }, {
-                $set: {
-                    password: password
+            if (!request.session.user) {
+                old_password = result[0].password
+                if (result[0].email == email) {
+                    db.collection('users').updateOne({
+                        "username": username
+
+                    }, { $set: { "password": password } }, function(error, result) {
+                        response.redirect('/')
+                    })
+                } else {
+                    response.render('simple_response.hbs', {
+                        h1: 'Incorrect Email'
+                    })
                 }
-            });
-            response.render('reset_result.hbs', {
-                h1: 'Password Reset',
-                message: 'Your password has been succesfully reset.'
-            });
+            } else {
+                if (bcrypt.compareSync(old_password, result[0].password)) {
+                    db.collection('users').updateOne({
+                        "username": username
+
+                    }, { $set: { "password": password } }, function(error, result) {
+                        response.redirect('/')
+                    })
+                } else {
+                    response.render('simple_response.hbs', {
+                        h1: 'Incorrect Password'
+                    });
+                }
+            }
         } else {
-            response.render('reset_result.hbs', {
-                h1: 'Invalid Token',
-                message: 'You have provided an invalid token. No changes have been made.'
+            response.render('simple_response.hbs', {
+                h1: 'Username not found'
             });
         }
     });
+
 });
+
+app.get('/cpwd', function(request, response) {
+    response.render('cpwd_test.hbs');
+});
+
+
+
+
 
 // Game 2 - Card Game
 
@@ -604,17 +544,14 @@ function getNumeric(card) {
 
 app.get('/save-score', function(request, response) {
     var db = utils.getDB();
-    console.log(score);
 
 
     db.collection('users').find({
         username: request.session.user.username
     }).toArray(function(err, result) {
-        console.log(result[0].score1);
         if (score > result[0].score1) {
             var scoreT = score + result[0].score
-            console.log(score);
-            console.log(scoreT);
+
             db.collection('users').updateOne({
                 "username": request.session.user.username
 
