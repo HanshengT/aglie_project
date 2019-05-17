@@ -370,7 +370,6 @@ app.post('/reset', function(request, response) {
             });
         }
     });
-
 });
 
 app.get('/cpwd', function(request, response) {
