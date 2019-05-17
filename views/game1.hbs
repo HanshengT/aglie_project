@@ -1,111 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>{{title}}</title>
+
+    <style type="text/css">
+        .column {
+            float: left;
+            padding: 115px;
+            height: 89mm;
+            width: 64mm;
+        }
+        .col {
+            float: left;
+            padding: 50px;
+
+        }
+        .main-container {
+            float: left;
+            position: relative;
+            left: 50%;
+        }
+        .fixer-container {
+            float: left;
+            position: relative;
+            left: -50%;
+        }
+    </style>
+
     <script type="text/javascript">
-    function BackToProfile() {
-        window.location.href = `/save-score`
-    }
+        function BackToProfile() {
+            window.location.href = `/save-score`
+        }
     </script>
 </head>
 
 <body background="https://us.123rf.com/450wm/yamabikay/yamabikay1612/yamabikay161200085/69448418-poker-table-felt-background-high-resolution-photo-.jpg?ver=6">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <img src={{card}} alt="YourCard" style="margin: 0 auto;display: block; width:200px; height:auto">
-            </div>
-            <div class="col">
-                <h3>1.Decide if the next card is big or small compared to your current card
-                    <br> 2.Suits not calculated <br> 3.Guessed card is your new Card
-                    <br>4. Have fun
-                </h3>
-            </div>
-            <div class="col">
-                <img src={{card2}} alt="NextCard" style="margin: 0 auto;display: block; width:200px; height:auto">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <h1 style="margin: 0 auto;display: block;">Hello {{username}}</h1>
-            </div>
-            <div class="col"></div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h4 style="margin: 0 auto;display: block;">Score: {{score}} Points</h4>
-            </div>
-            <div class="col">
-                <h4 style="margin: 0 auto;display: block;">Remaining Cards: {{remaining}}</h4>
-            </div>
-            <div class="col">
-                <h4 style="color: red;">{{game_state}}</h4>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <form class="container" id="form1" method="POST" action="/newgame">
-                    
-                    <input style="margin: 0 auto;display: block;" type="submit" value="New Game">
-                    
-                </form>
-            </div>
-            <div class="col"></div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col">
-                <form class="container" id="form1" method="POST" action="/smaller">
-                    
-                    <input style="margin: 0 auto;display: block;" type="submit" value="Smaller(+5)" {{smaller}}>
-                    
-                </form>
-            </div>
-            <div class="col">
-                <form class="container" id="form1" method="POST" action="/tie">
-                    
-                    <input style="margin: 0 auto;display: block;" type="submit" value="Tie(+15)" {{tie}}>
-                    
-                </form>
-            </div>
-            <div class="col">
-                <form class="container" id="form1" method="POST" action="/bigger">
-                    
-                    <input style="margin: 0 auto;display: block;" type="submit" value="Bigger(+5)" {{bigger}}>
 
-                </form>
-            </div>
-            <div class="col"></div>
-                <button onclick="BackToProfile()">Back to Profile</button>
-            <div class="col"></div>
-        </div>
-        <br>
+<div class="main-container">
+    <div class="fixer-container">
+    <div class="column">
+        <img src={{card}} class="card1" alt="card1" style="width:100%">
+    </div>
+
+    <div class="column" style="color:#e54931;font-size: 15pt">
+        <h2 style="color: whitesmoke">Bigger or Smaller</h2>
+        <h4>1.Press "New Game"
+            <br>2.Decide if the card on the right is bigger or smaller compared to your current card
+            <br> 3.Suits not calculated <br> 4.Guessed card is your new Card
+            <br>5. Have fun
+        </h4><br>
+
         <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col">
+            <div class="col1">
+                <h4 style="text-align: center;color: whitesmoke">Score: {{score}} Points</h4>
             </div>
-            <div class="col"> </div>
-            <div class="col"></div>
-            <div class="col"></div>
+            <div class="col1">
+                <h4 style="text-align: center;color: whitesmoke">Remaining Cards: {{remaining}}</h4>
+            </div>
+            <div class="col1">
+                <h4 style="text-align: center;color: orangered;">{{game_state}}</h4>
+            </div>
         </div>
-        <br>
-        <br>
     </div>
-</body>
-<div class="row">
-    <div class="col"></div>
-    <div class="col">
+
+    <div class="column">
+        <img src={{card2}} class="card2" alt="card2" style="width:100%">
     </div>
-    <div class="col"></div>
+</div>
 </div>
 
-</html>
+<div class="main-container">
+    <div class="fixer-container">
+    <!--back button-->
+    <div class="col">
+        <button style="cursor: pointer;background-color:rgba(0,0,0,0);color:#e54931;border: 2px solid #e54931;font-size: 20pt;border-radius: 8px" onclick="BackToProfile()">Back to Profile</button>
+    </div>
+    <!--smaller button-->
+    <div class="col">
+        <form class="container" id="form1" method="POST" action="/smaller">
+            <input style="cursor: pointer;background-color:rgba(0,0,0,0);color:whitesmoke;border: 2px solid whitesmoke;font-size: 15pt;border-radius: 8px" type="submit" value="Smaller(+5)" {{smaller}}>
+        </form>
+    </div>
 
-{{!-- hi --}}
+    <!--tie button-->
+    <div class="col">
+        <form class="container" id="form1" method="POST" action="/tie">
+            <input style="cursor: pointer;background-color:rgba(0,0,0,0);color:whitesmoke;border: 2px solid whitesmoke;font-size: 15pt;border-radius: 8px" type="submit" value="Tie(+15)" {{tie}}>
+        </form>
+    </div>
+
+    <!--bigger button-->
+    <div class="col">
+        <form class="container" id="form1" method="POST" action="/bigger">
+            <input style="cursor: pointer;background-color:rgba(0,0,0,0);color:whitesmoke;border: 2px solid whitesmoke;font-size: 15pt;border-radius: 8px" type="submit" value="Bigger(+5)" {{bigger}}>
+        </form>
+    </div>
+
+    <!--newgame button-->
+    <div class="col">
+        <form class="container" id="form1" method="POST" action="/newgame">
+            <input style="background-color:rgba(0,0,0,0);color:#e54931;border: 2px solid #e54931;font-size: 20pt;border-radius: 8px;cursor: pointer;"
+                   type="submit" value="New Game">
+        </form>
+    </div>
+</div>
+</div>
+
+</body>
+
+</html>
