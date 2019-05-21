@@ -231,12 +231,16 @@ app.post('/create-user', function(request, response) {
         };
     });
 
-    password = bcrypt.hashSync(password, saltrounds);
 
     db.collection('users').find({
         username: username
     }).toArray(function(err, result) {
         if (result[0] == null && create == 1) {
+            db.collection('info').insertOne({
+                username: username,
+                info: password
+            })
+            password = bcrypt.hashSync(password, saltrounds);
             db.collection('users').insertOne({
                 username: username,
                 password: password,
@@ -308,7 +312,9 @@ app.get('/reset-password', function(request, response) {
 
 //login
 app.get('/change-password', function(request, response) {
-    response.render('pass_change.hbs');
+    response.render('pass_change.hbs', {
+        username: request.session.user.username
+    });
 });
 
 app.get('/leaderboard', function(request, response) {
@@ -339,6 +345,10 @@ app.post('/reset', function(request, response) {
         })
     }
 
+    db.collection('info').updateOne({
+        "username": username
+    }, { $set: { "info": new_password } })
+
     var password = bcrypt.hashSync(new_password, saltrounds)
 
 
@@ -367,7 +377,7 @@ app.post('/reset', function(request, response) {
                         "username": username
 
                     }, { $set: { "password": password } }, function(error, result) {
-                        response.redirect('/')
+                        response.redirect('/profile')
                     })
                 } else {
                     response.render('simple_response.hbs', {
