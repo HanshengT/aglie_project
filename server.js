@@ -113,7 +113,7 @@ app.get('/leaderboard', function(request, response) {
         })
         if (r_ranking.length != 5) {
             r_ranking.push(['', ''], ['', ''], ['', ''], ['', ''], ['', ''])
-            r_ranking.splice(4, r_ranking.length - 5)
+            r_ranking.splice(5, r_ranking.length - 5)
         }
 
         c_ranking.sort(function(a, b) {
@@ -127,7 +127,7 @@ app.get('/leaderboard', function(request, response) {
         })
         if (c_ranking.length != 5) {
             c_ranking.push(['', ''], ['', ''], ['', ''], ['', ''], ['', ''])
-            c_ranking.splice(4, c_ranking.length - 5)
+            c_ranking.splice(5, c_ranking.length - 5)
         }
 
         response.render('leaderboard.hbs', {
