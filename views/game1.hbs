@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <title>{{title}}</title>
 
     <style type="text/css">
@@ -43,7 +44,7 @@
         <img src={{card}} class="card1" alt="card1" style="width:100%">
     </div>
 
-    <div class="column" style="color:#e54931;font-size: 15pt">
+    <div class="column" style="color:#000000;font-family: 'Montserrat';font-size: 15pt">
         <h2 style="color: whitesmoke">Bigger or Smaller</h2>
         <h4>1.Press "New Game"
             <br>2.Decide if the card on the right is bigger or smaller compared to your current card
@@ -59,7 +60,7 @@
                 <h4 style="text-align: center;color: whitesmoke">Remaining Cards: {{remaining}}</h4>
             </div>
             <div class="col1">
-                <h4 style="text-align: center;color: orangered;">{{game_state}}</h4>
+                <h4 style="text-align: center;color: rgb(182, 0, 0);">{{game_state}}</h4>
             </div>
         </div>
     </div>
@@ -74,7 +75,7 @@
     <div class="fixer-container">
     <!--back button-->
     <div class="col">
-        <button style="cursor: pointer;background-color:rgba(0,0,0,0);color:#e54931;border: 2px solid #e54931;font-size: 20pt;border-radius: 8px" onclick="BackToProfile()">Back to Profile</button>
+        <button style="cursor: pointer;background-color:rgba(0,0,0,0);color:rgb(182, 0, 0);border: 2px solid #e54931;font-size: 20pt;border-radius: 8px" onclick="BackToProfile()">Back to Profile</button>
     </div>
     <!--smaller button-->
     <div class="col">
@@ -100,7 +101,7 @@
     <!--newgame button-->
     <div class="col">
         <form class="container" id="form1" method="POST" action="/newgame">
-            <input style="background-color:rgba(0,0,0,0);color:#e54931;border: 2px solid #e54931;font-size: 20pt;border-radius: 8px;cursor: pointer;"
+            <input style="background-color:rgba(0,0,0,0);color:rgb(182, 0, 0);border: 2px solid #e54931;font-size: 20pt;border-radius: 8px;cursor: pointer;"
                    type="submit" value="New Game">
         </form>
     </div>
